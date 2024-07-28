@@ -53,6 +53,7 @@ def get_device_list(email='all'):
         writer = csv.DictWriter(file, fieldnames=row_data.keys())
         writer.writerow(row_data)
 
+
 scheduler = BackgroundScheduler()
 scheduler.add_job(get_device_list, 'interval', minutes=1, args=['saiful.aromax@gmail.com'])
 scheduler.start()
