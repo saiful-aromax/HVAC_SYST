@@ -22,7 +22,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/aromax/Documents/Aro
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-
             
 def get_device_list(email='all'):
     with app.app_context():
