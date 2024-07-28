@@ -15,7 +15,6 @@ import csv
 from sqlalchemy import text
 import time
 
-
 app = Flask(__name__, static_folder="C:/Users/aromax/Documents/AroProjects/SmartEMS/SmartEMS/static/")
 app.secret_key = "your_very_secret_key_here"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/aromax/Documents/AroProjects/SmartEMS/smart_ems.db'
