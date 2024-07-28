@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Smart EMS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/smart_ems.css') }}">
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="color: blueviolet; background-color: aquamarine; font-size: 20px; text-align: center;">{% with
+                messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="/login" method="post" class="login">
+                <br><br><br>
+                <h2 style="text-align: center">Welcome</h2>
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </div>
+                <br><br>
+                <div>
+                    <table style="text-align: center; margin: auto; border-radius: 8px; width: 40%;">
+                        <tr>
+                            <td>Email</td>
+                        </tr>
+                        <tr>
+                            <td><input type="email" class="form-control" name="email" required="required"></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                        </tr>
+                        <tr>
+                            <td><input type="password" class="form-control" name="password" required="required"></td>
+                        </tr>
+                        <tr>
+                            <td><button style="background-color: rgb(65, 129, 118); color: black;"
+                                    class="btn btn-outline-secondary" type="submit">Sign In</button></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div><button style="background-color: rgb(41, 194, 194); color: black;"
+                            class="btn btn-outline-secondary" type="button"
+                            onclick="window.location.href='/register'">Not registered? Sign Up</button></div>
+                    <!-- <input type="text" class="form-control" name="name" placeholder="Item name" required>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Add Item</button>
+                </div>
+                -->
+                </div>
+            </form>
+        </div>
+        <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
+</html>

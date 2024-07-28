@@ -1,0 +1,10 @@
+pip install Flask
+pip install Flask-SQLAlchemy
+pip install Flask-Bcrypt
+pip install hashlib
+pip install hmac
+pip install jsonlib
+pip install urllib3
+pip install DateTime
+pip install requests
+pip install APScheduler

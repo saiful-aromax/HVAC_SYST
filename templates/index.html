@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Smart EMS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/smart_ems.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $(".set_temp").on("change", function () {
+                    var temp_device_id = $(this).val().split("_");
+                    $.ajax({
+                        type: 'GET',
+                        url: '/set_temp',
+                        data: {
+                            device_id: temp_device_id[1],
+                            client_id: $("#client_id").val(),
+                            client_secret: $("#client_secret").val(),
+                            temperature: temp_device_id[0]
+                        },
+                        success: function (data) {
+                            // alert(data);
+                        },
+                        error: function (xhr, errmsg, err) {
+                            alert('Error');
+                        }
+                    });
+
+                });
+
+                $("#set_switch").on("click", function () {
+                    var action = "";
+                    var switch_text = "";
+                    if ($("#switch_text").text() == "OFF") {
+                        action = "false";
+                        switch_text = "OFF"
+                    } else {
+                        action = "true";
+                        switch_text = "ON"
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        url: '/set_switch',
+                        data: {
+                            device_id: $("#socket_device_id").val(),
+                            client_id: $("#client_id").val(),
+                            client_secret: $("#client_secret").val(),
+                            action: action
+                        },
+                        success: function (data) {
+                            // alert(data);
+                            $("#switch_text").text(switch_text);
+                        },
+                        error: function (xhr, errmsg, err) {
+                            alert('Error');
+                        }
+                    });
+
+                });
+
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container"
+            style="background: repeating-linear-gradient(45deg, #f0f0f0, #f0f0f0 10px, #e0e0e0 10px, #e0e0e0 20px)">
+            <div
+                style="color: rgb(206, 203, 214); background-color: rgb(37, 117, 28); font-size: 20px; text-align: center;">
+                {% with
+                messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="/register" method="post" class="login">
+                <br><br><br>
+                <h2 style="text-align: center">Smart EMS</h2>
+                <h5 style="text-align: center">My IOT Device List</h5>
+                <!-- <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </div>
+                <br><br> -->
+                <div>
+                    <table style="text-align: center; margin: auto; border-radius: 8px; width: 50%;" border="1">
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        {% for Item in data %}
+                        <tr>
+                            <td>{{ Item.device_name }}</td>
+                            <td id="state">{{ Item.state }}</td>
+                            <input type="hidden" name="client_id" id="client_id" value="{{ Item.client_id }}">
+                            <input type="hidden" name="client_secret" id="client_secret"
+                                value="{{ Item.client_secret }}">
+                            <td>
+                                {% if Item.type == 'TRV' %}
+                                <select name="set_temp[]" id="set_temp[]" class="set_temp">
+                                    <option value="">--Select--</option>
+                                    <option value="1_{{ Item.device_id }}">1</option>
+                                    <option value="2_{{ Item.device_id }}">2</option>
+                                    <option value="3_{{ Item.device_id }}">3</option>
+                                    <option value="4_{{ Item.device_id }}">4</option>
+                                    <option value="5_{{ Item.device_id }}">5</option>
+                                    <option value="6_{{ Item.device_id }}">6</option>
+                                    <option value="7_{{ Item.device_id }}">7</option>
+                                    <option value="8_{{ Item.device_id }}">8</option>
+                                    <option value="9_{{ Item.device_id }}">9</option>
+                                    <option value="10_{{ Item.device_id }}">10</option>
+                                    <option value="11_{{ Item.device_id }}">11</option>
+                                    <option value="12_{{ Item.device_id }}">12</option>
+                                    <option value="13_{{ Item.device_id }}">13</option>
+                                    <option value="14_{{ Item.device_id }}">14</option>
+                                    <option value="15_{{ Item.device_id }}">15</option>
+                                    <option value="16_{{ Item.device_id }}">16</option>
+                                    <option value="17_{{ Item.device_id }}">17</option>
+                                    <option value="18_{{ Item.device_id }}">18</option>
+                                    <option value="19_{{ Item.device_id }}">19</option>
+                                    <option value="20_{{ Item.device_id }}">20</option>
+                                    <option value="21_{{ Item.device_id }}">21</option>
+                                    <option value="22_{{ Item.device_id }}">22</option>
+                                    <option value="23_{{ Item.device_id }}">23</option>
+                                    <option value="24_{{ Item.device_id }}">24</option>
+                                    <option value="25_{{ Item.device_id }}">25</option>
+                                    <option value="26_{{ Item.device_id }}">26</option>
+                                    <option value="27_{{ Item.device_id }}">27</option>
+                                    <option value="28_{{ Item.device_id }}">28</option>
+                                    <option value="29_{{ Item.device_id }}">29</option>
+                                    <option value="30_{{ Item.device_id }}">30</option>
+                                    <option value="31_{{ Item.device_id }}">31</option>
+                                    <option value="32_{{ Item.device_id }}">32</option>
+                                    <option value="33_{{ Item.device_id }}">33</option>
+                                    <option value="34_{{ Item.device_id }}">34</option>
+                                    <option value="35_{{ Item.device_id }}">35</option>
+                                    <option value="36_{{ Item.device_id }}">36</option>
+                                    <option value="37_{{ Item.device_id }}">37</option>
+                                    <option value="38_{{ Item.device_id }}">38</option>
+                                    <option value="39_{{ Item.device_id }}">39</option>
+                                    <option value="40_{{ Item.device_id }}">40</option>
+                                </select>
+                                {% endif %}
+                                {% if Item.type == 'thermostat' %}
+                                <select name="set_temp[]" id="set_temp[]" class="set_temp">
+                                    <option value="">--Select--</option>
+                                    <option value="2_{{ Item.device_id }}">1</option>
+                                    <option value="4_{{ Item.device_id }}">2</option>
+                                    <option value="6_{{ Item.device_id }}">3</option>
+                                    <option value="8_{{ Item.device_id }}">4</option>
+                                    <option value="10_{{ Item.device_id }}">5</option>
+                                    <option value="12_{{ Item.device_id }}">6</option>
+                                    <option value="14_{{ Item.device_id }}">7</option>
+                                    <option value="16_{{ Item.device_id }}">8</option>
+                                    <option value="18_{{ Item.device_id }}">9</option>
+                                    <option value="20_{{ Item.device_id }}">10</option>
+                                    <option value="22_{{ Item.device_id }}">11</option>
+                                    <option value="24_{{ Item.device_id }}">12</option>
+                                    <option value="26_{{ Item.device_id }}">13</option>
+                                    <option value="28_{{ Item.device_id }}">14</option>
+                                    <option value="30_{{ Item.device_id }}">15</option>
+                                    <option value="32_{{ Item.device_id }}">16</option>
+                                    <option value="34_{{ Item.device_id }}">17</option>
+                                    <option value="36_{{ Item.device_id }}">18</option>
+                                    <option value="38_{{ Item.device_id }}">19</option>
+                                    <option value="40_{{ Item.device_id }}">20</option>
+                                    <option value="42_{{ Item.device_id }}">21</option>
+                                    <option value="44_{{ Item.device_id }}">22</option>
+                                    <option value="46_{{ Item.device_id }}">23</option>
+                                    <option value="48_{{ Item.device_id }}">24</option>
+                                    <option value="50_{{ Item.device_id }}">25</option>
+                                    <option value="52_{{ Item.device_id }}">26</option>
+                                    <option value="54_{{ Item.device_id }}">27</option>
+                                    <option value="56_{{ Item.device_id }}">28</option>
+                                    <option value="58_{{ Item.device_id }}">29</option>
+                                    <option value="60_{{ Item.device_id }}">30</option>
+                                    <option value="62_{{ Item.device_id }}">31</option>
+                                    <option value="64_{{ Item.device_id }}">32</option>
+                                    <option value="66_{{ Item.device_id }}">33</option>
+                                    <option value="68_{{ Item.device_id }}">34</option>
+                                    <option value="70_{{ Item.device_id }}">35</option>
+                                    <option value="72_{{ Item.device_id }}">36</option>
+                                    <option value="74_{{ Item.device_id }}">37</option>
+                                    <option value="76_{{ Item.device_id }}">38</option>
+                                    <option value="78_{{ Item.device_id }}">39</option>
+                                    <option value="80_{{ Item.device_id }}">40</option>
+                                </select>
+                                {% endif %}
+                                {% if Item.type == 'socket' %}
+                                <input type="hidden" id="socket_device_id" name="socket_device_id"
+                                    value="{{ Item.device_id }}">
+                                <button type="button" name="set_switch" id="set_switch"><span id="switch_text">{% if
+                                        Item.state == 'Status: OFF' %}ON{% else %}OFF{% endif %}</span></button>
+                                {% endif %}
+                                {% if Item.type == 'hub' %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <br><br><br><br><br><br>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>

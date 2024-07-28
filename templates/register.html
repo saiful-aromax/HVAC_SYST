@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Smart EMS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/smart_ems.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sign_up').click(function () {
+                    var password = $('#password').val();
+                    var retypePassword = $('#retype_password').val();
+                    var email = $('#email').val();
+                    var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+                    if (regex.test(email)) {
+                        $('#email_label').text("");
+                        if (password === retypePassword) {
+                            $('form').submit();
+                        } else {
+                            $('#password_label').text("Passwords do not match!");
+                        }
+                    } else {
+                        $('#email_label').text("Invalid email format");
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="color: blueviolet; background-color: aquamarine; font-size: 20px; text-align: center;">{% with
+                messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="/register" method="post" class="login">
+                <br><br><br>
+                <h2 style="text-align: center">Welcome</h2>
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </div>
+                <br><br>
+                <div>
+                    <table style="text-align: center; margin: auto; border-radius: 8px; width: 40%;">
+                        <tr>
+                            <td><label for="Email">Email</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="email" id="email" class="form-control" name="email" required="required">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span id="email_label" style="color: red;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label for="password">Password:</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="password" class="form-control" id="password" name="password"
+                                    required="required"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="retype_password">Retype Password:</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="password" class="form-control" id="retype_password" name="retype_password"
+                                    required="required"></td>
+                        </tr>
+                        <tr>
+                            <td><span id="password_label" style="color: red;"></span></td>
+                        </tr>
+                        <tr>
+                            <td><button style="background-color: rgb(41, 194, 194); color: black;" id="sign_up"
+                                    class="btn btn-outline-secondary" type="button">Sign Up</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>
